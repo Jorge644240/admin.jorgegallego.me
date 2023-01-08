@@ -1,6 +1,6 @@
 const { createLogger, format, transports } = require("winston");
 const path = require("node:path");
-require("./../../cron/clearInfoLog.job");
+if (process.env.NODE_ENV !== "actions") require("./../../cron/clearInfoLog.job");
 
 const infoLogger = createLogger({
 	level: "info",
