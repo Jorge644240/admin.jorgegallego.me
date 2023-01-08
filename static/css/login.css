@@ -1,0 +1,60 @@
+body
+{
+	margin: 0;
+}
+main 
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: 'Poppins';
+	width: 100%;
+}
+form
+{
+	width: 70%;
+	text-align: center;
+	margin: 0 auto;
+}
+form *
+{
+	display: block;
+	margin: 0 auto 1rem;
+	width: 40%;
+}
+h1
+{
+	font-size: 2.5rem;
+}
+p.error
+{
+	text-transform: uppercase;
+	color: #CC0000;
+	font-weight: 600;
+}
+input
+{
+	font-family: inherit;
+	padding: 0.2rem 0.5rem;
+	font-size: 1rem;
+	border-radius: 10px;
+	border: 1px solid;
+	transition: all 0.1s linear;
+}
+input:focus
+{
+	box-shadow: 2px 2px 5px #000000;
+	outline: none;
+}
+input[type="submit"]
+{
+	width: auto;
+	padding: 0.2rem 1rem;
+	background-color: #000000;
+	color: #FFFFFF;
+	cursor: pointer;
+	border-color: #000000;
+}
