@@ -23,6 +23,7 @@ jobs:
             RDS_DB_USERNAME: ${{ secrets.RDS_DB_USERNAME }}
             RDS_DB_PASSWORD: ${{ secrets.RDS_DB_PASSWORD }}
             RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
+            NODE_ENV: actions
 
         steps:
             - uses: actions/checkout@v3
