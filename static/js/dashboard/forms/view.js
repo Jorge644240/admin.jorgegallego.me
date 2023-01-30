@@ -1,0 +1,1 @@
+document.querySelector("main aside.description").innerHTML = document.querySelector("main aside.description").innerText;
