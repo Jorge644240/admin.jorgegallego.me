@@ -13,4 +13,236 @@ html(lang="en")
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap")
 		link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.css")
 		link(rel="stylesheet", href="/css/dashboard.css")
+		if adminDashboardSection === "profile"
+		else if adminDashboardSection === "experience"
+			link(rel="stylesheet", href="/css/dashboard/experiences.css")
+		else if adminDashboardSection === "projects"
+			link(rel="stylesheet", href="/css/dashboard/projects.css")
+		else if adminDashboardSection === "contacts"
+			link(rel="stylesheet", href="/css/dashboard/contacts.css")
 	body 
+		header 
+			nav 
+				div 
+					a(href="/dashboard", class=adminDashboardSection==="home"?"active":"", title="Home")
+						i.bi-house-door-fill
+					a(href="/dashboard/profile", class=adminDashboardSection==="profile"?"active":"", title="Admin Profile")
+						i.bi-person-circle
+					a(href="/dashboard/skills", class=adminDashboardSection==="skills"?"active":"", title="Skills")
+						i.bi-person-lines-fill
+					a(href="/dashboard/experience", class=adminDashboardSection==="experience"?"active":"", title="Experiences")
+						i.bi-person-badge-fill
+					a(href="/dashboard/projects", class=adminDashboardSection==="projects"?"active":"", title="Projects")
+						i.bi-person-rolodex
+					a(href="/dashboard/courses", class=adminDashboardSection==="courses"?"active":"", title="Courses")
+						i.bi-person-workspace
+					a(href="/dashboard/contacts", class=adminDashboardSection==="contacts"?"active":"", title="Contacts")
+						i.bi-person-lines-fill
+				a(href="/logout")
+					i.bi-door-open-fill 
+		main
+			if adminDashboardSection === "home"
+				h1 Admin Dashboard
+				section
+					aside#profile 
+						h2 Admin Profile
+						p.row 
+							span ID 
+							span Username
+						p.row 
+							span #{admin.id}
+							span #{admin.username}
+					aside#skills 
+						h2 Skills
+							a(href="/dashboard/skills") See All 
+						p.row 
+							span ID
+							span Name 
+							span Level
+						each skill, index in skills
+							p.row 
+								span #{skill.id}
+								span #{skill.name}
+								span #{skill.level}
+					aside#experience 
+						h2 Experiences
+							a(href="/dashboard/experience") See All
+						p.row 
+							span Title
+							span Company
+							span Type
+						each experience in experiences
+							p.row
+								span #{experience.title}
+								span #{experience.company}
+								span #{experience.type}
+					aside#projects 
+						h2 Projects
+							a(href="/dashboard/projects") See All
+						p.row 
+							span Name 
+							span URL 
+						each project in projects 
+							p.row 
+								span #{project.name}
+								span 
+									a(href=project.url, target="_blank", rel="noopener noreferrer nofollow") Project URL
+										sup.bi-box-arrow-up-right
+					aside#courses 
+						h2 Courses
+							a(href="/dashboard/courses") See All
+						p.row 
+							span Name 
+							span School 
+							span Year 
+						each course in courses .slice(0, 3)
+							p.row 
+								span #{course.name}
+								span #{course.school}
+								span #{course.year}
+					aside#contacts
+						h2 Contacts
+							if contacts.length > 0
+								a(href="/dashboard/contacts") See All
+						if contacts.length > 0
+							p.row 
+								span Name 
+								span Email
+							each contact in contacts 
+								p.row 
+									span #{contact.name}
+									span #{contact.email}
+						else if contacts.length === 0
+							p.notification You don't have any contacts yet
+			else if adminDashboardSection === "profile"
+				h1 Admin Profile
+				section.dashboard 
+					p.row 
+						span ID
+						span Username
+					p.row 
+						span #{admin.id}
+						span #{admin.username}
+			else if adminDashboardSection === "skills"
+				h1 Skills
+					aside.actions
+						a.create(href="javascript:void(0)") Add Skill
+						a.edit(href="javascript:void(0)") Edit Skill
+				section.dashboard
+					p.row 
+						span Name
+						span Level
+					each skill in skills
+						p.row(id=skill.id)
+							span #{skill.name}
+							span #{skill.level}
+							span.tooltip
+								a.edit(href="javascript:void(0)", data-skill=skill.id)
+									i.bi-pencil-fill
+								a.remove(href="javascript:void(0)", data-skill=skill.id)
+									i.bi-trash3-fill
+			else if adminDashboardSection === "experience"
+				h1 Work Experience
+					aside.actions
+						a.create(href="javascript:void(0)") Add Experience
+						a.edit(href="javascript:void(0)") Edit Experience
+				section.dashboard
+					p.row 
+						span Title
+						span Company
+						span Type
+						span Summary
+					each experience in experiences 
+						p.row 
+							span #{experience.title}
+							span 
+								a(href=experience.website, target="_blank", rel="noopener noreferrer nofollow") #{experience.company} 
+									sup.bi-box-arrow-up-right
+							span #{experience.type}
+							span #{experience.summary}
+							span.tooltip
+								a.view(href="javascript:void(0)", data-experience=experience.id)
+									i.bi-eye-fill
+								a.edit(href="javascript:void(0)", data-experience=experience.id)
+									i.bi-pencil-fill
+								a.remove(href="javascript:void(0)", data-experience=experience.id)
+									i.bi-trash3-fill
+			else if adminDashboardSection === "projects"
+				h1 Projects
+					aside.actions
+						a.create(href="javascript:void(0)") Add Project
+						a.edit(href="javascript:void(0)") Edit Project
+				section.dashboard 
+					p.row 
+						span Name
+						span URL
+						span Image
+					each project in projects 
+						p.row
+							span #{project.name} 
+								if project.featured 
+									i.bi-star-fill
+							span 
+								a(href=project.url, target="_blank", rel="noopener noreferrer nofollow") Project URL 
+									sup.bi-box-arrow-up-right
+							span 
+								a(href=project.image, target="_blank", rel="noopener noreferrer nofollow") Project Image 
+									sup.bi-box-arrow-up-right
+							span.tooltip
+								a.view(href="javascript:void(0)", data-project=project.id)
+									i.bi-eye-fill
+								a.edit(href="javascript:void(0)", data-project=project.id)
+									i.bi-pencil-fill
+								a.remove(href="javascript:void(0)", data-project=project.id)
+									i.bi-trash3-fill
+			else if adminDashboardSection === "courses"
+				h1 Courses
+					aside.actions
+						a.create(href="javascript:void(0)") Add Course
+				section.dashboard 
+					p.row
+						span Name
+						span School
+						span Topic
+						span Year
+					each course in courses 
+						p.row 
+							span 
+								a(href=course.url, target="_blank", rel="noreferrer noopener nofollow") #{course.name} 
+									sup.bi-box-arrow-up-right 
+							span #{course.school}
+							span #{course.topic}
+							span #{course.year}
+							span.tooltip 
+								a.remove(href="javascript:void(0)", data-course=course.id)
+									i.bi-trash3-fill
+			else if adminDashboardSection === "contacts"
+				h1 Contacts
+				section.dashboard
+					if contacts.length > 0
+						p.row
+							span Name 
+							span Email 
+							span Service 
+							span Message
+						each contact in contacts 
+							p.row 
+								span #{contact.name}
+								span 
+									a(href=`mailto:${contact.email}`) #{contact.email}
+								span #{contact.service}
+								span #{contact.message}
+					else if contacts.length === 0
+						p.notification You don't have any contacts yet
+			if message || error 
+				aside.notification.active(class=message?"message":error?"error":"")
+					p #{message || error}
+		script(src="/js/dashboard.js") 
+		if adminDashboardSection === "skills"
+			script(src="/js/dashboard/skills.js") 
+		else if adminDashboardSection === "experience"
+			script(src="/js/dashboard/experiences.js") 
+		else if adminDashboardSection === "projects"
+			script(src="/js/dashboard/projects.js")
+		else if adminDashboardSection === "courses"
+			script(src="/js/dashboard/courses.js")

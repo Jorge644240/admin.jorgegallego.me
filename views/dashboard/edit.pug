@@ -1,0 +1,58 @@
+doctype html
+
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(name="author", content="Jorge Gallego")
+		meta(name="title", content=title)
+		title #{title}
+		link(rel="preconnect", href="https://fonts.googleapis.com")
+		link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap")
+		link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.css")
+		link(rel="stylesheet", href="/css/dashboard.css")
+		link(rel="stylesheet", href="/css/dashboard/forms/create.css")
+		link(rel="stylesheet", href="/css/dashboard/forms/edit.css")
+	body 
+		a.cancel(href="javascript:void(0)") Cancel
+		if !resourceType || resourceType===null
+			h1 Select Item to Update
+			form
+				select#itemId(name="itemId", required)
+					each item in selectItemOptions 
+						option(value=item.id) #{item.name}
+				input(type="submit", value="Select")
+		else if resourceType === "skill"
+			h1 Edit Skill
+			form(method="POST")
+				p.name Skill: #{skill.name}
+				select#level(name="level")
+					option(value="0") Currently Learning
+					option(value="1") Novice
+					option(value="2") Experienced
+					option(value="3") Advanced
+					option(value="4") Expert
+				input(type="submit", name="action", value="Edit Skill")
+		else if resourceType === "experience"
+			h1 Edit Experience
+			form(method="POST")
+				p.name #{job.name}
+				input#title(type="text", name="title", maxlength="100", placeholder="Work Title *")
+				input#webiste(type="url", name="website", maxlength="100", placeholder="Company Website URL *")
+				textarea#summary(name="summary", rows="5", minlength="10", maxlength="150", placeholder="Summary *")
+				textarea#description(name="description", rows="10", minlength="50", maxlength="1500", placeholder="Description * (This block allows Markdown syntax)")
+				label(for="endDate") End Date
+				input#endDate(type="date", name="endDate")
+				input(type="submit", name="action", value="Edit Experience")
+		else if resourceType === "project"
+			h1 Edit Project
+			form(method="POST", enctype="multipart/form-data") 
+				p.name #{project.name}
+				input#url(type="url", name="url", placeholder="Project URL *")
+				textarea#description(name="description", rows="10", minlength="50", maxlength="500", placeholder="Project Description * (This block supports Markdown)")
+				label(for="image") Project Image *
+				input#image(type="file", name="image", accept="image/png, image/jpeg")
+				input(type="submit", name="action", value="Edit Project")
+		script(src="/js/dashboard/forms/create.js") 

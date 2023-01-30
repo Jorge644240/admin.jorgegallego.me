@@ -1,0 +1,39 @@
+doctype html
+
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(name="author", content="Jorge Gallego")
+		meta(name="title", content=title)
+		title #{title}
+		link(rel="preconnect", href="https://fonts.googleapis.com")
+		link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap")
+		link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.css")
+		link(rel="stylesheet", href="/css/dashboard.css")
+		link(rel="stylesheet", href="/css/dashboard/forms/create.css")
+		link(rel="stylesheet", href="/css/dashboard/forms/view.css")
+	body 
+		a.cancel(href="javascript:void(0)") Go Back
+		main 
+			if resourceType === "experience"
+				h1 #{experience.title}
+				p.company
+					a(href=experience.website, target="_blank", rel="noopener noreferrer nofollow")  #{experience.company} 
+						sup.bi-box-arrow-up-right
+				p.type Employment Type: 
+					span #{experience.type}
+				p.date #{experience.startDate.toLocaleDateString()} - #{experience.endDate.toLocaleDateString() || "Present"}
+				p.summary #{experience.summary}
+				aside.description #{experience.description}
+			else if resourceType === "project"
+				h1 #{project.name}
+				p.featured Featured Project: 
+					span #{project.featured ? "Yes" : "No"}
+				a(href=project.url, target="_blank", rel="noopener noreferrer nofollow") 
+					img(src=project.image, alt=project.name, title=project.name)
+				aside.description #{project.description}
+		script(src="/js/dashboard/forms/create.js") 
+		script(src="/js/dashboard/forms/view.js") 

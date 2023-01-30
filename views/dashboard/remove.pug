@@ -1,0 +1,23 @@
+doctype html
+
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(name="author", content="Jorge Gallego")
+		meta(name="title", content=title)
+		title #{title}
+		link(rel="preconnect", href="https://fonts.googleapis.com")
+		link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+		link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap")
+		link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.css")
+		link(rel="stylesheet", href="/css/dashboard.css")
+		link(rel="stylesheet", href="/css/dashboard/forms/create.css")
+	body 
+		a.cancel(href="javascript:void(0)") Cancel
+		h1 Confirm Action
+		form(method="POST")
+			input#pass(type="password", name="pass", placeholder="Enter Password *", required)
+			input(type="submit", name="action", value="Confirm Action")
+		script(src="/js/dashboard/forms/create.js") 
