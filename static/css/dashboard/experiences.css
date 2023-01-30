@@ -1,0 +1,8 @@
+p.row
+{
+	align-items: flex-start;
+}
+p.row span
+{
+	word-wrap: break-word;
+}
