@@ -28,8 +28,9 @@ Project.init({
 			notEmpty: true,
 			len: [5, 100]
 		},
-		set(newProjectName) {
-			this.setDataValue("name", newProjectName);
+		set(value) {
+			if (this.getDataValue("name") && this.getDataValue("name")!==null) throw new Error("Cannto set Project Name after creation");
+			else this.setDataValue("name", value);
 		}
 	},
 	description: {

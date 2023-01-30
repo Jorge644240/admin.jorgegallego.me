@@ -27,8 +27,9 @@ Course.init({
 			notEmpty: true,
 			len: [5, 100]
 		},
-		set(newCourseName) {
-			this.setDataValue("name", newCourseName);
+		set(value) {
+			if (this.getDataValue("name") && this.getDataValue("name")!==null) throw new Error("Cannot set Course Name after creation");
+			else this.setDataValue("name", value);
 		}
 	}, 
 	school: {
@@ -49,8 +50,9 @@ Course.init({
 			notEmpty: true,
 			isUrl: true
 		},
-		set(newCourseUrl) {
-			this.setDataValue("url", newCourseUrl);
+		set(value) {
+			if (this.getDataValue("url") && this.getDataValue("url")!==null) throw new Error("Cannot set Course URL after creation");
+			else this.setDataValue("url", value);
 		}
 	},
 	year: {

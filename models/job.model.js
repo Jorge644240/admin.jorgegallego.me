@@ -86,7 +86,7 @@ Job.init({
 			isDate: true
 		},
 		set(value) {
-			if (this.getDataValue("startDate") && this.getDataValue("startDate")!==value) throw new Error("Cannot set Job Start Year after creation");
+			if (this.getDataValue("startDate") && this.getDataValue("startDate")!==null) throw new Error("Cannot set Job Start Year after creation");
 			else this.setDataValue("startDate", value);
 		}
 	},
@@ -97,7 +97,6 @@ Job.init({
 			isDate: true
 		},
 		set(value) {
-			
 			if (this.getDataValue("startDate") && this.getDataValue("startDate")>value) throw new Error("Job End Year cannot be before Job Start Year");
 			else this.setDataValue("endDate", value);
 		}
@@ -114,6 +113,15 @@ Job.init({
 		set(value) {
 			if (this.getDataValue("type") && this.getDataValue("type")!==null) throw new Error("Cannot set Job Type after creation");
 			else this.setDataValue("type", value);
+		}
+	},
+	name: {
+		type: DataTypes.VIRTUAL,
+		get() {
+			return `${this.getDataValue("title")} - ${this.getDataValue("company")}`;
+		},
+		set(value) {
+			throw new Error("Cannot set value of VIRTUAL property");
 		}
 	}
 }, {
