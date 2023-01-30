@@ -9,6 +9,9 @@ module.exports = class ContactController {
 			where: filterParameters
 		});
 	}
+	static async getLatestContacts() {
+		return (await Contact.findAll()).reverse().slice(0, 5);
+	}
 	static async getContact(searchParameters) {
 		return await Contact.findOne({
 			where: searchParameters

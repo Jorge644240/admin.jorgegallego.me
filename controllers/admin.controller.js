@@ -2,22 +2,14 @@ const { sign } = require("jsonwebtoken");
 const ResourceNotFoundError = require("../data/errors/ResourceNotFoundError");
 const Admin = require("../models/admin.model");
 
+/**
+ * @typedef {Object} DBActionResponse
+ * @property {string} message - DB action status
+ * @property {Project|void} [project]
+ * @property {Error} [error]
+ */
+
 class AdminController {
-	static async #createAdmin(adminData) {
-		const admin = new Admin(adminData);
-		try {
-			const result = await admin.save();
-			return {
-				message: "Admin created successfully",
-				admin: result
-			};
-		} catch (err) {
-			return {
-				message: "Failed to create Admin",
-				error: err.original || err
-			};
-		};
-	}
 	static async #updateAdmin(adminUsername, updateOptions) {
 		const admin = await Admin.findOne({
 			where: {
@@ -44,43 +36,8 @@ class AdminController {
 			};
 		};
 	}
-	static async #deleteAdmin(adminUsername) {
-		const admin = await Admin.findOne({
-			where: {
-				username: adminUsername
-			}
-		});
-		try {
-			if (admin === null) throw new ResourceNotFoundError({
-				resourceType: "Admin",
-				searchParameters: {
-					username: adminUsername
-				}
-			});
-			const result = await admin.destroy();
-			return {
-				message: "Admin deleted successfully",
-				admin: result
-			};
-		} catch (err) {
-			return {
-				message: "Failed to delete Admin",
-				error: err.orignal || err
-			};
-		}
-	}
-	static async createAdmin(adminData) {
-		const result = await AdminController.#createAdmin(adminData);
-		if (result.error) throw result.error;
-		else return result;
-	}
 	static async updateAdmin(adminUsername, updateOptions) {
 		const result = await AdminController.#updateAdmin(adminUsername, updateOptions);
-		if (result.error) throw result.error;
-		else return result;
-	}
-	static async deleteAdmin(adminUsername) {
-		const result = await AdminController.#deleteAdmin(adminUsername);
 		if (result.error) throw result.error;
 		else return result;
 	}
@@ -140,6 +97,11 @@ class AdminController {
 			audience: "Jorge Gallego",
 			expiresIn: "1h"
 		});
+	}
+	static async authenticateAdmin(adminData) {
+		const admin = await AdminController.getAdminByUsername(adminData.username);
+		if (adminData.password !== admin.password) return false;
+		else if (adminData.password === admin.password) return true;
 	}
 };
 
