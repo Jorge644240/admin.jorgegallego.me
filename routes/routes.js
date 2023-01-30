@@ -3,7 +3,7 @@ const { verify } = require("jsonwebtoken");
 const { verifyAdmin } = require("../controllers/admin.controller");
 const router = Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
 	console.log(req.signedCookies.adminToken);
 	if (!req.signedCookies.adminToken) res.redirect("/login");
 	else if (req.signedCookies.adminToken) {
